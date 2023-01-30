@@ -10,12 +10,7 @@ import retrofit2.http.Query
 interface ApiServices {
 
 
-    //    https://api.themoviedb.org/3/movie/upcoming?api_key=***&page=1
-    //    https://api.themoviedb.org/3/movie/popular?api_key=***
-    //    https://api.themoviedb.org/3/genre/movie/list?api_key=***
-    //    https://api.themoviedb.org/3/search/movie?api_key=***&query=MovieName&page=1
-    //    https://api.themoviedb.org/3/movie/{movie_id}?api_key=***
-    //    https://api.themoviedb.org/3/movie/{movie_id}/credits?api_key=***
+
 
 
 
@@ -42,5 +37,9 @@ interface ApiServices {
 
     @GET("movie/{movie_id}/credits")
     fun getMovieCredits(@Path("movie_id") id: Int): Single<Response<CreditsLisResponse>>
+
+    @GET("movie/{movie_id}/videos")
+    fun getMovieVideos(@Path("movie_id") id: Int): Single<Response<VideoListResponse >>
+
 
 }

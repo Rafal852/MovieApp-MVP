@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 class UpcomingMoviesAdapter @Inject constructor() : RecyclerView.Adapter<UpcomingMoviesAdapter.ViewHolder>() {
     private lateinit var binding: ItemMoviesUpcomingBinding
-    private var moviesList = emptyList<UpcomingMoviesListResponse.Result>()
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         binding= ItemMoviesUpcomingBinding.inflate(LayoutInflater.from(parent.context),parent,false)

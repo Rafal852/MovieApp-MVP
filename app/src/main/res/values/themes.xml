@@ -1,6 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.MovieWatch" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+
+        <item name="android:windowFullscreen">true</item>
+
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -13,7 +16,7 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
 
-        <item name="android:windowBackground">@color/chineseBlack</item>
+        <item name="android:windowBackground">#141414</item>
         <!-- navigationBarColor . -->
         <item name="android:navigationBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
     </style>

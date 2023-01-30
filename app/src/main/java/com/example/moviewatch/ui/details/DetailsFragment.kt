@@ -8,18 +8,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import com.example.moviewatch.R
+import com.example.moviewatch.adapter.DetailsGenreAdapter
 import com.example.moviewatch.adapter.ImagesAdapter
+import com.example.moviewatch.adapter.TrailerMovieAdapter
 import com.example.moviewatch.databinding.FragmentDetailsBinding
 import com.example.moviewatch.db.MoviesEntity
-import com.example.moviewatch.response.CreditsLisResponse
-import com.example.moviewatch.response.DetailsMovieResponse
+import com.example.moviewatch.response.*
 import com.example.moviewatch.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
+import java.math.RoundingMode
 import javax.inject.Inject
 import kotlin.math.roundToInt
 import kotlin.math.roundToLong
@@ -37,6 +40,12 @@ class DetailsFragment : Fragment(), DetailsContracts.View {
 
     @Inject
     lateinit var imagesAdapter: ImagesAdapter
+
+    @Inject
+    lateinit var videoAdapter: TrailerMovieAdapter
+
+    @Inject
+    lateinit var genreAdapter: DetailsGenreAdapter
 
     @Inject
     lateinit var detailsPresenter: DetailsPresenter
@@ -58,6 +67,8 @@ class DetailsFragment : Fragment(), DetailsContracts.View {
             if (movieId > 0) {
                 detailsPresenter.callDetailsMovie(movieId)
                 detailsPresenter.callCreditsMovie(movieId)
+                detailsPresenter.callVideoMovie(movieId)
+
             }
 
 
@@ -80,10 +91,16 @@ class DetailsFragment : Fragment(), DetailsContracts.View {
                 crossfade(800)
             }
             movieNameTxt.text = data.title
-            movieRateTxt.text = data.voteAverage.toString()
+            movieRateTxt.text = data.voteAverage.toBigDecimal().setScale(1, RoundingMode.DOWN).toString()
             movieTimeTxt.text = "${data.runtime} min"
             movieDateTxt.text = data.releaseDate
             movieSummaryInfo.text = data.overview
+
+
+
+
+
+
 
 
             entity.id = movieId
@@ -94,6 +111,15 @@ class DetailsFragment : Fragment(), DetailsContracts.View {
             entity.year = data.releaseDate
 
             detailsPresenter.checkFavorite(movieId)
+
+        }
+
+        binding.apply {
+            genreAdapter.differ.submitList(data.genres)
+            genreDetailsRecycler.apply {
+                layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+                adapter = genreAdapter
+            }
 
         }
     }
@@ -107,6 +133,20 @@ class DetailsFragment : Fragment(), DetailsContracts.View {
             }
         }
     }
+
+    override fun loadVideosMovie(data: VideoListResponse) {
+        binding.apply {
+           videoAdapter.differ.submitList(data.results)
+            trailerRv.apply {
+                layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+                adapter = videoAdapter
+            }
+
+        }
+    }
+
+
+
 
     override fun updateFavorite(isAdded: Boolean) {
         binding.apply {
@@ -126,6 +166,10 @@ class DetailsFragment : Fragment(), DetailsContracts.View {
             }
         }
     }
+
+
+
+
 
     override fun showLoading() {
         binding.apply {

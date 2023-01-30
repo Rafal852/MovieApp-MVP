@@ -9,12 +9,12 @@
     <color name="white">#FFFFFFFF</color>
 
 
-    <color name="chineseBlack">#12033C</color>
-    <color name="chineseBlackAlpha">#150050</color>
+    <color name="chineseBlack">#141414</color>
+    <color name="chineseBlackAlpha">#191919</color>
     <color name="scarlet">#f81633</color>
-    <color name="raisinBlack">#3F0071</color>
+    <color name="raisinBlack">#D2000000</color>
     <color name="crayola">#FB2576</color>
     <color name="philippineSilver">#B3B3B3</color>
     <color name="philippineSilverAlpha">#94B3B3B3</color>
-    <color name="gunmetal">#3F0071</color>
+    <color name="gunmetal">#5E000000</color>
 </resources>

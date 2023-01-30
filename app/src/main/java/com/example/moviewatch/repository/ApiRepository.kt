@@ -18,4 +18,6 @@ class ApiRepository @Inject constructor(
 
     fun getTopRatedMoviesList(page: Int) = apiServices.getTopRatedMoviesList(page)
 
+    fun getVideoMoviesList(id: Int) = apiServices.getMovieVideos(id)
+
 }

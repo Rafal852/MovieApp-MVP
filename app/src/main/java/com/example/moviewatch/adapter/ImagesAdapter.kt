@@ -11,6 +11,7 @@ import com.example.moviewatch.R
 import com.example.moviewatch.databinding.ItemDetailImagesBinding
 
 import com.example.moviewatch.response.CreditsLisResponse
+import com.example.moviewatch.response.UpcomingMoviesListResponse
 import com.example.moviewatch.utils.Constants
 import javax.inject.Inject
 
@@ -35,15 +36,26 @@ class ImagesAdapter @Inject constructor() : RecyclerView.Adapter<ImagesAdapter.V
         @SuppressLint("SetTextI18n")
         fun setData(item: CreditsLisResponse.Cast) {
             binding.apply {
-                tvName.text=item.name
+                realNameTv.text=item.name
+                characterNameTv.text=item.character
                 val moviePosterURL = Constants.POSTER_BASE_URL + item?.profilePath
                 itemImages.load(moviePosterURL) {
                     placeholder(R.drawable.ic_baseline_account_circle_24)
                     crossfade(true)
                     crossfade(800)
                 }
+                root.setOnClickListener {
+                    onItemClickListener?.let {
+                        it(item)
+                    }
+                }
             }
         }
+    }
+
+    private var onItemClickListener : ((CreditsLisResponse.Cast) -> Unit)? = null
+    fun setonItemClickListener(listener: (CreditsLisResponse.Cast) -> Unit) {
+        onItemClickListener=listener
     }
 
     private val differCallback = object : DiffUtil.ItemCallback<CreditsLisResponse.Cast>() {

@@ -5,6 +5,8 @@ object Constants {
     const val BASE_URL = "https://api.themoviedb.org/3/"
     const val POSTER_BASE_URL = "https://image.tmdb.org/t/p/w342"
     const val POSTER_BACKDROP_URL = "https://image.tmdb.org/t/p/w1280"
+    const val BASE_THUMBNAIL_URL_1 = "https://img.youtube.com/vi/"
+    const val BASE_THUMBNAIL_URL_2 = "/0.jpg"
 
     const val NETWORK_TIMEOUT = 60L
 

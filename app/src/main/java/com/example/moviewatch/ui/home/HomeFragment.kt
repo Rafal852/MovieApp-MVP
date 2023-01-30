@@ -1,5 +1,6 @@
 package com.example.moviewatch.ui.home
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,10 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
-import com.example.moviewatch.adapter.PopularMoviesAdapter
-import com.example.moviewatch.adapter.GenreMoviesAdapter
-import com.example.moviewatch.adapter.TopRatedMoviesAdapter
-import com.example.moviewatch.adapter.UpcomingMoviesAdapter
+import com.example.moviewatch.adapter.*
 import com.example.moviewatch.databinding.FragmentHomeBinding
 import com.example.moviewatch.response.PopularMoviesListResponse
 import com.example.moviewatch.response.GenresListResponse
@@ -39,6 +37,9 @@ class HomeFragment : Fragment(), HomeContracts.View {
 
     @Inject
     lateinit var topRatedMoviesAdapter: TopRatedMoviesAdapter
+
+    @Inject
+    lateinit var showGenreResultAdapter: ShowGenreResultAdapter
 
     @Inject
     lateinit var homePresenter: HomePresenter
@@ -100,13 +101,17 @@ class HomeFragment : Fragment(), HomeContracts.View {
         binding.apply {
 
             lifecycleScope.launchWhenCreated {
-                popularMoviesAdapter.bind(data.results)
+                showGenreResultAdapter.bind(data.results)
             }
 
-            popularMoviesRecycler.apply {
-                layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-                adapter = popularMoviesAdapter
+            showGenresResultRecycler.apply {
+                layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+                adapter = showGenreResultAdapter
             }
+        }
+        showGenreResultAdapter.setonItemClickListener {
+            val direction = HomeFragmentDirections.actionToDetailFragment(it.id)
+            findNavController().navigate(direction)
         }
     }
 

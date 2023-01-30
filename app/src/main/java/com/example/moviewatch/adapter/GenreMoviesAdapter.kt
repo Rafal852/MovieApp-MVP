@@ -1,10 +1,13 @@
 package com.example.moviewatch.adapter
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.moviewatch.R
 import com.example.moviewatch.databinding.ItemHomeGenreListBinding
 import com.example.moviewatch.response.GenresListResponse.Genre
 import javax.inject.Inject
@@ -31,6 +34,7 @@ class GenreMoviesAdapter @Inject constructor() : RecyclerView.Adapter<GenreMovie
 
                 root.setOnClickListener {
                     onItemClickListener?.let {
+
                         it(item)
                     }
                 }

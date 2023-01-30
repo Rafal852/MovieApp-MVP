@@ -15,6 +15,7 @@ class FavoritesPresenter
 
     companion object{
         const val TAG="FavoritesPresenter"
+        const val REQUEST_CAMERA = 100
     }
 
     override fun callFavoritesList() {

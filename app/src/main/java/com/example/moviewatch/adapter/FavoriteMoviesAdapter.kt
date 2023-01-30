@@ -11,6 +11,7 @@ import com.example.moviewatch.databinding.ItemMoviesFavoritesBinding
 import com.example.moviewatch.databinding.ItemMoviesPopularBinding
 import com.example.moviewatch.db.MoviesEntity
 import com.example.moviewatch.utils.Constants.POSTER_BASE_URL
+import java.math.RoundingMode
 import javax.inject.Inject
 
 class FavoriteMoviesAdapter @Inject constructor() : RecyclerView.Adapter<FavoriteMoviesAdapter.ViewHolder>() {
@@ -34,7 +35,7 @@ class FavoriteMoviesAdapter @Inject constructor() : RecyclerView.Adapter<Favorit
         fun setData(item: MoviesEntity) {
             binding.apply {
                 movieNameTxt.text = item.title
-                movieRateTxt.text = item.rate
+                movieRateTxt.text = item.rate.toBigDecimal().setScale(1, RoundingMode.DOWN).toString()
                 movieYearTxt.text = item.year
                 movieCountryTxt.text = item.lang
 

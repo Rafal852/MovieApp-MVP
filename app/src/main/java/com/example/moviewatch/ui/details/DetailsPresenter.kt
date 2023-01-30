@@ -64,6 +64,32 @@ class DetailsPresenter
             }
     }
 
+
+    fun callVideoMovie(id: Int) {
+        disposable = repository
+            .getVideoMoviesList(id)
+            .applyIoScheduler()
+            .subscribe { response ->
+                when (response.code()) {
+                    in 200..202 ->
+                        response.body()?.let { itBody ->
+                            Log.e("DetailsPresenter", "itBody : $itBody")
+                            view.loadVideosMovie(itBody)
+                        }
+                    in 300..399 -> {
+                        Log.d("DetailsPresenter", " Redirection messages : ${response.code()}")
+                    }
+                    in 400..499 -> {
+                        Log.d("DetailsPresenter", " Client error responses : ${response.code()}")
+                    }
+                    in 500..599 -> {
+                        Log.d("DetailsPresenter", " Server error responses : ${response.code()}")
+                    }
+                }
+            }
+    }
+
+
     override fun saveMovie(entity: MoviesEntity) {
         disposable = dbRepository.insertMovie(entity)
             .subscribeOn(Schedulers.io())

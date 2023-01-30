@@ -3,6 +3,8 @@ package com.example.moviewatch.ui.details
 import com.example.moviewatch.db.MoviesEntity
 import com.example.moviewatch.response.CreditsLisResponse
 import com.example.moviewatch.response.DetailsMovieResponse
+import com.example.moviewatch.response.GenresListResponse
+import com.example.moviewatch.response.VideoListResponse
 import com.example.moviewatch.ui.base.BasePresenter
 import com.example.moviewatch.ui.base.BaseView
 
@@ -10,6 +12,7 @@ interface DetailsContracts {
     interface View : BaseView {
         fun loadDetailsMovie(data : DetailsMovieResponse)
         fun loadCreditsMovie(data : CreditsLisResponse)
+        fun loadVideosMovie(data : VideoListResponse)
 
         //db
         fun updateFavorite(isAdded: Boolean)

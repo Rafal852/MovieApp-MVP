@@ -12,4 +12,7 @@ object Constants {
 
     const val MOVIES_TABLE = "movies_table"
     const val MOVIES_DATABASE = "movies_database"
+
+    const val USER_TABLE = "user_table"
+    const val USER_DATABASE = "users_database"
 }

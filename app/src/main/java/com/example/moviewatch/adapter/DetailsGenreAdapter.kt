@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.moviewatch.R
 import com.example.moviewatch.databinding.ItemHomeGenreListBinding
 import com.example.moviewatch.response.DetailsMovieResponse
 import com.example.moviewatch.response.GenresListResponse
@@ -20,6 +21,7 @@ class DetailsGenreAdapter @Inject constructor() : RecyclerView.Adapter<DetailsGe
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.setData(differ.currentList[position])
+        holder.itemView.setBackgroundResource(R.drawable.bg_rounded_dark)
         holder.setIsRecyclable(false)
     }
 

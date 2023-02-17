@@ -16,6 +16,8 @@ class DetailsPresenter
     private val dbRepository: DatabaseRepository,
     val view: DetailsContracts.View,
 ) : DetailsContracts.Presenter, BasePresenterImpl() {
+
+
     override fun callDetailsMovie(id: Int) {
         disposable = repository
             .getMovieDetails(id)
@@ -65,6 +67,7 @@ class DetailsPresenter
     }
 
 
+
     fun callVideoMovie(id: Int) {
         disposable = repository
             .getVideoMoviesList(id)
@@ -88,6 +91,10 @@ class DetailsPresenter
                 }
             }
     }
+
+
+
+
 
 
     override fun saveMovie(entity: MoviesEntity) {

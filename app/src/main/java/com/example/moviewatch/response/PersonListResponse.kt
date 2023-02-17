@@ -14,5 +14,7 @@ data class PersonListResponse(
     val name: String,
     val place_of_birth: String,
     val popularity: Double,
-    val profile_path: String
+    val profile_path: String,
+    val character : String?,
+    val department: String?
 )

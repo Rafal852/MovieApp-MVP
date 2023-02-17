@@ -1,6 +1,5 @@
 package com.example.moviewatch.ui.details
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.lifecycleScope
+
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,16 +20,17 @@ import com.example.moviewatch.databinding.FragmentDetailsBinding
 import com.example.moviewatch.db.MoviesEntity
 import com.example.moviewatch.response.*
 import com.example.moviewatch.utils.Constants
+import com.google.firebase.database.FirebaseDatabase
 import dagger.hilt.android.AndroidEntryPoint
 import java.math.RoundingMode
 import javax.inject.Inject
-import kotlin.math.roundToInt
-import kotlin.math.roundToLong
 
 @AndroidEntryPoint
 class DetailsFragment : Fragment(), DetailsContracts.View {
 
     private lateinit var binding: FragmentDetailsBinding
+
+    private lateinit var database: FirebaseDatabase
 
     private var movieId = 0
     private val args: DetailsFragmentArgs by navArgs()
@@ -51,6 +51,7 @@ class DetailsFragment : Fragment(), DetailsContracts.View {
     lateinit var detailsPresenter: DetailsPresenter
 
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -69,6 +70,7 @@ class DetailsFragment : Fragment(), DetailsContracts.View {
                 detailsPresenter.callCreditsMovie(movieId)
                 detailsPresenter.callVideoMovie(movieId)
 
+
             }
 
 
@@ -78,7 +80,10 @@ class DetailsFragment : Fragment(), DetailsContracts.View {
         }
 
 
+
+
     }
+
 
 
     override fun loadDetailsMovie(data: DetailsMovieResponse) {
@@ -95,12 +100,6 @@ class DetailsFragment : Fragment(), DetailsContracts.View {
             movieTimeTxt.text = "${data.runtime} min"
             movieDateTxt.text = data.releaseDate
             movieSummaryInfo.text = data.overview
-
-
-
-
-
-
 
 
             entity.id = movieId
@@ -124,15 +123,7 @@ class DetailsFragment : Fragment(), DetailsContracts.View {
         }
     }
 
-    override fun loadCreditsMovie(data: CreditsLisResponse) {
-        binding.apply {
-            imagesAdapter.differ.submitList(data.cast)
-            imagesRecyclerView.apply {
-                layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-                adapter = imagesAdapter
-            }
-        }
-    }
+
 
     override fun loadVideosMovie(data: VideoListResponse) {
         binding.apply {
@@ -144,6 +135,29 @@ class DetailsFragment : Fragment(), DetailsContracts.View {
 
         }
     }
+
+
+    override fun loadCreditsMovie(data: CreditsLisResponse) {
+        binding.apply {
+            imagesAdapter.differ.submitList(data.cast)
+            imagesRecyclerView.apply {
+                layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+                adapter = imagesAdapter
+            }
+            imagesAdapter.setonItemClickListener {
+                val direction = it.id?.let { it1 ->
+                    DetailsFragmentDirections.actionToPersonFragment(
+                        it1
+                    )
+                }
+                if (direction != null) {
+                    findNavController().navigate(direction)
+                }
+            }
+        }
+    }
+
+
 
 
 

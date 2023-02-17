@@ -28,6 +28,14 @@
         android:paddingTop="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/searchEdt" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/nowPlayingRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchEdt"
+        android:clipToPadding="false"
+        android:paddingTop="10dp" />
     <ProgressBar
         android:id="@+id/searchLoading"
         android:layout_width="20dp"

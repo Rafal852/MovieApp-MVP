@@ -11,9 +11,6 @@ interface ApiServices {
 
 
 
-
-
-
     @GET("movie/upcoming")
     fun getUpcomingMoviesList(@Query("page") page: Int): Single<Response<UpcomingMoviesListResponse>>
 
@@ -22,6 +19,9 @@ interface ApiServices {
 
     @GET("genre/movie/list")
     fun getGenres(): Single<Response<GenresListResponse>>
+
+    @GET("movie/now_playing")
+    fun getNowPlayingMovies(@Query("page") page: Int): Single<Response<NowPlayingResponse>>
 
     @GET("discover/movie")
     fun getMoviesGenres(@Query("page") page: Int,@Query("with_genres") with_genres: String): Single<Response<PopularMoviesListResponse>>
@@ -35,11 +35,22 @@ interface ApiServices {
     @GET("movie/{movie_id}")
     fun getMovieDetails(@Path("movie_id") id: Int): Single<Response<DetailsMovieResponse>>
 
+    @GET("movie/{movie_id}/similar")
+    fun getSimilarMovies(@Path("movie_id") id: Int): Single<Response<SimilarResponse>>
+
     @GET("movie/{movie_id}/credits")
     fun getMovieCredits(@Path("movie_id") id: Int): Single<Response<CreditsLisResponse>>
 
     @GET("movie/{movie_id}/videos")
     fun getMovieVideos(@Path("movie_id") id: Int): Single<Response<VideoListResponse >>
+
+    @GET("person/{person_id}")
+    fun getPersonDetails(@Path("person_id") id: Int): Single<Response<PersonListResponse>>
+
+    @GET("person/{person_id}/movie_credits")
+    fun getPlayedIn(@Path("person_id") id: Int): Single<Response<PlayedInListResponse>>
+
+
 
 
 }

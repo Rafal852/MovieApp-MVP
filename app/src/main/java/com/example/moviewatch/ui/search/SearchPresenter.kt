@@ -35,4 +35,31 @@ class SearchPresenter
             }
     }
 
+    override fun callNowPlayingMovieList(page: Int) {
+        disposable = repository
+            .getNowPlayingMoviesList(page)
+            .applyIoScheduler()
+            .subscribe { response ->
+                when (response.code()) {
+                    in 200..202 ->
+                        response.body()?.let { itBody ->
+                            Log.e("MainPresenter", "itBody : $itBody")
+                            view.loadNowPlayingMoviesList(itBody)
+                        }
+                    in 300..399 -> {
+                        Log.d("MainPresenter", " Redirection messages : ${response.code()}")
+                    }
+                    in 400..499 -> {
+                        Log.d("MainPresenter", " Client error responses : ${response.code()}")
+                    }
+                    in 500..599 -> {
+                        Log.d("MainPresenter", " Server error responses : ${response.code()}")
+                    }
+
+                }
+
+            }
+    }
+
+
 }

@@ -2,6 +2,7 @@ package com.example.moviewatch.di
 
 
 import androidx.fragment.app.Fragment
+import com.example.moviewatch.ui.credits.PersonContracts
 import com.example.moviewatch.ui.details.DetailsContracts
 import com.example.moviewatch.ui.favorites.FavoritesContracts
 import com.example.moviewatch.ui.home.HomeContracts
@@ -23,6 +24,11 @@ object ContractsModule {
     @Provides
     fun detailView(fragment: Fragment): DetailsContracts.View {
         return fragment as DetailsContracts.View
+    }
+
+    @Provides
+    fun personView(fragment: Fragment) : PersonContracts.View{
+        return fragment as PersonContracts.View
     }
 
     @Provides

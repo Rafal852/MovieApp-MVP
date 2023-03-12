@@ -32,6 +32,8 @@ interface ApiServices {
     @GET("search/movie")
     fun getSearchMoviesList(@Query("page") page: Int,@Query("query") query: String): Single<Response<PopularMoviesListResponse>>
 
+
+
     @GET("movie/{movie_id}")
     fun getMovieDetails(@Path("movie_id") id: Int): Single<Response<DetailsMovieResponse>>
 

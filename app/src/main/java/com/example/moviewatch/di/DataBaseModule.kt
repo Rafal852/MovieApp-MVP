@@ -16,17 +16,17 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object DataBaseModule {
 
-    @Provides
-    @Singleton
-    fun provideDatabase(@ApplicationContext context: Context) = Room.databaseBuilder(
-        context, MoviesDatabase::class.java, MOVIES_DATABASE
-    )
-        .allowMainThreadQueries()
-        .fallbackToDestructiveMigration()
-        .build()
-    @Provides
-    @Singleton
-    fun provideDao(db : MoviesDatabase) = db.moviesDoa()
+//    @Provides
+//    @Singleton
+//    fun provideDatabase(@ApplicationContext context: Context) = Room.databaseBuilder(
+//        context, MoviesDatabase::class.java, MOVIES_DATABASE
+//    )
+//        .allowMainThreadQueries()
+//        .fallbackToDestructiveMigration()
+//        .build()
+//    @Provides
+//    @Singleton
+//    fun provideDao(db : MoviesDatabase) = db.moviesDoa()
 
 
     @Provides

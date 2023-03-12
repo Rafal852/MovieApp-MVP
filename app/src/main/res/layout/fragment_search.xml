@@ -28,14 +28,46 @@
         android:paddingTop="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/searchEdt" />
+    <TextView
+        android:id="@+id/nowPlayingTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:textColor="@color/crayola"
+        android:textSize="12sp"
+        android:text="@string/now_playing"
+        app:layout_constraintTop_toBottomOf="@+id/searchEdt"
+        app:layout_constraintBottom_toTopOf="@+id/nowPlayingRecycler"
+        />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/nowPlayingRecycler"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchEdt"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/seeAllTxt"
+        app:layout_constraintTop_toBottomOf="@+id/nowPlayingTxt"
         android:clipToPadding="false"
         android:paddingTop="10dp" />
+    <TextView
+        android:id="@+id/seeAllTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:textColor="@color/crayola"
+        android:textSize="12sp"
+        android:text="See all genres..."
+        app:layout_constraintTop_toBottomOf="@+id/nowPlayingRecycler"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/genresSearchRecycler"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintTop_toBottomOf="@+id/seeAllTxt"
+        android:clipToPadding="false"
+        android:paddingTop="10dp" />
+
+
     <ProgressBar
         android:id="@+id/searchLoading"
         android:layout_width="20dp"

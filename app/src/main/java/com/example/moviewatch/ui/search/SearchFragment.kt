@@ -5,19 +5,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.moviewatch.adapter.GenreSearchAdapter
+
 import com.example.moviewatch.adapter.NowPlayingMoviesAdapter
 import com.example.moviewatch.adapter.PopularMoviesAdapter
 import com.example.moviewatch.databinding.FragmentSearchBinding
 import com.example.moviewatch.layoutManager.ScaleCenterItemLayoutManager
-import com.example.moviewatch.response.NowPlayingResponse
-import com.example.moviewatch.response.PopularMoviesListResponse
-import com.example.moviewatch.response.TopMoviesResponse
+import com.example.moviewatch.response.*
 import com.example.moviewatch.ui.home.HomeFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -38,6 +39,9 @@ class SearchFragment : Fragment(), SearchContracts.View {
     @Inject
     lateinit var searchPresenter: SearchPresenter
 
+    @Inject
+    lateinit var genreSearchAdapter: GenreSearchAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -50,12 +54,24 @@ class SearchFragment : Fragment(), SearchContracts.View {
         super.onViewCreated(view, savedInstanceState)
 
         searchPresenter.callNowPlayingMovieList(1)
+        searchPresenter.callGenres()
 
         binding.apply {
             searchEdt.addTextChangedListener {
                 val search = it.toString()
-                if (search.isNotEmpty()) {
+                if (search.isEmpty()) {
+                    nowPlayingTxt.visibility = View.VISIBLE
+                    nowPlayingRecycler.visibility = View.VISIBLE
+                    genresSearchRecycler.visibility = View.VISIBLE
+                    seeAllTxt.visibility = View.VISIBLE
+                    moviesRecycler.visibility = View.GONE
+                }else{
+                    moviesRecycler.visibility = View.VISIBLE
                     searchPresenter.callSearchMoviesList(1,search)
+                    nowPlayingTxt.visibility = View.GONE
+                    nowPlayingRecycler.visibility = View.GONE
+                    genresSearchRecycler.visibility = View.GONE
+                    seeAllTxt.visibility = View.GONE
                 }
             }
         }
@@ -89,11 +105,35 @@ class SearchFragment : Fragment(), SearchContracts.View {
             nowPlayingRecycler.apply {
                 layoutManager = ScaleCenterItemLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
                 adapter = nowPlayingMoviesAdapter
+
+
+
+
             }
+            // Scroll to the middle position
+            nowPlayingRecycler.smoothScrollToPosition(11)
+
             nowPlayingMoviesAdapter.setonItemClickListener {
                 val direction = HomeFragmentDirections.actionToDetailFragment(it.id)
                 findNavController().navigate(direction)
             }
+        }
+    }
+
+    override fun loadGenres(data: GenresListResponse) {
+        binding.apply {
+            genreSearchAdapter.differ.submitList(data.genres)
+            genresSearchRecycler.apply {
+                layoutManager = GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
+                adapter = genreSearchAdapter
+            }
+            genreSearchAdapter.setonItemClickListener {
+                searchPresenter.callGenres()
+            }
+        }
+        genreSearchAdapter.setonItemClickListener {
+            val direction = SearchFragmentDirections.actionSearchFragmentToGenresFragment2()
+            findNavController().navigate(direction)
         }
     }
 

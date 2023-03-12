@@ -16,6 +16,8 @@ class ApiRepository @Inject constructor(
 
 
     fun getSearchMoviesList(page: Int,query: String) = apiServices.getSearchMoviesList(page,query)
+
+
     fun getMovieCredits(id: Int) = apiServices.getMovieCredits(id)
 
     fun getTopRatedMoviesList(page: Int) = apiServices.getTopRatedMoviesList(page)

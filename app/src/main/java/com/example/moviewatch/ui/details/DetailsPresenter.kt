@@ -3,9 +3,12 @@ package com.example.moviewatch.ui.details
 import android.util.Log
 import com.example.moviewatch.db.MoviesEntity
 import com.example.moviewatch.repository.ApiRepository
-import com.example.moviewatch.repository.DatabaseRepository
+
+import com.example.moviewatch.repository.FirebaseRepository
 import com.example.moviewatch.ui.base.BasePresenterImpl
+import com.example.moviewatch.ui.favorites.FavoritesPresenter.Companion.TAG
 import com.example.moviewatch.utils.applyIoScheduler
+import com.google.firebase.auth.FirebaseAuth
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -13,7 +16,7 @@ import javax.inject.Inject
 class DetailsPresenter
 @Inject constructor(
     private val repository: ApiRepository,
-    private val dbRepository: DatabaseRepository,
+    private val firebaseRepository: FirebaseRepository,
     val view: DetailsContracts.View,
 ) : DetailsContracts.Presenter, BasePresenterImpl() {
 
@@ -92,13 +95,9 @@ class DetailsPresenter
             }
     }
 
-
-
-
-
-
     override fun saveMovie(entity: MoviesEntity) {
-        disposable = dbRepository.insertMovie(entity)
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        disposable = firebaseRepository.insertMovie(userId, entity)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
@@ -107,7 +106,8 @@ class DetailsPresenter
     }
 
     override fun deleteMovie(entity: MoviesEntity) {
-        disposable = dbRepository.deleteMovie(entity)
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        disposable = firebaseRepository.deleteMovie(userId, entity.id)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
@@ -116,13 +116,47 @@ class DetailsPresenter
     }
 
     override fun checkFavorite(id: Int) {
-        disposable = dbRepository.existMovie(id)
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        disposable = firebaseRepository.existMovie(userId, id)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                view.updateFavorite(it)
-            }
+            .subscribe(
+                { it -> view.updateFavorite(it) }, // specify the type of the lambda expression
+                { error -> Log.e(   TAG, "Error checking favorite", error) }
+            )
     }
 
 
-}
+
+
+
+//    override fun saveMovie(entity: MoviesEntity) {
+//        disposable = dbRepository.insertMovie(entity)
+//            .subscribeOn(Schedulers.io())
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribe {
+//                view.updateFavorite(true)
+//            }
+//    }
+//
+//
+//    override fun deleteMovie(entity: MoviesEntity) {
+//        disposable = dbRepository.deleteMovie(entity)
+//            .subscribeOn(Schedulers.io())
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribe {
+//                view.updateFavorite(false)
+//            }
+//    }
+//
+//    override fun checkFavorite(id: Int) {
+//        disposable = dbRepository.existMovie(id)
+//            .subscribeOn(Schedulers.io())
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribe {
+//                view.updateFavorite(it)
+//            }
+    }
+
+
+

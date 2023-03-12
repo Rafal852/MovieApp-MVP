@@ -164,7 +164,7 @@ class FavoritesFragment : Fragment() , FavoritesContracts.View {
         favoriteMoviesAdapter.bind(data)
 
         binding.favoriteRecycler.apply {
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             adapter = favoriteMoviesAdapter
         }
 

@@ -101,7 +101,7 @@ class HomeFragment : Fragment(), HomeContracts.View {
         binding.apply {
 
             lifecycleScope.launchWhenCreated {
-                showGenreResultAdapter.bind(data.results)
+                    showGenreResultAdapter.bind(data.results)
             }
 
             showGenresResultRecycler.apply {

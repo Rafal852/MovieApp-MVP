@@ -103,7 +103,13 @@ class DetailsFragment : Fragment(), DetailsContracts.View {
 
 
             entity.id = movieId
-            entity.poster = data.posterPath
+            try {
+                entity.poster = data.posterPath
+            } catch (e: NullPointerException) {
+                // handle the exception gracefully
+                val errorMessage = "An error occurred while setting the poster image."
+                Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
+            }
             entity.lang = data.originalLanguage
             entity.title = data.title
             entity.rate = data.voteAverage.toString()

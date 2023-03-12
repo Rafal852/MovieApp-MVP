@@ -10,6 +10,8 @@ import kotlin.math.min
 class ScaleCenterItemLayoutManager : LinearLayoutManager {
     @Inject constructor(context: Context?, orientation: Int, reverseLayout: Boolean): super(context, orientation, reverseLayout)
 
+    private var horizontalSpace = 0
+
     override fun checkLayoutParams(lp: RecyclerView.LayoutParams?): Boolean {
         lp!!.width = width/2
         return true
@@ -18,6 +20,18 @@ class ScaleCenterItemLayoutManager : LinearLayoutManager {
     override fun onLayoutCompleted(state: RecyclerView.State?) {
         super.onLayoutCompleted(state)
         scaleMiddleItem()
+    }
+
+    override fun onLayoutChildren(recycler: RecyclerView.Recycler?, state: RecyclerView.State?) {
+        super.onLayoutChildren(recycler, state)
+        horizontalSpace = width - paddingStart - paddingEnd
+    }
+
+    override fun onScrollStateChanged(state: Int) {
+        super.onScrollStateChanged(state)
+        if (state == RecyclerView.SCROLL_STATE_IDLE) {
+            scaleMiddleItem()
+        }
     }
 
     override fun scrollHorizontallyBy(
@@ -35,6 +49,7 @@ class ScaleCenterItemLayoutManager : LinearLayoutManager {
 
     }
 
+
     private fun scaleMiddleItem(){
 
         val mid = width/2
@@ -43,7 +58,7 @@ class ScaleCenterItemLayoutManager : LinearLayoutManager {
             val child = getChildAt(i)
             val childMid = (getDecoratedRight(child!!) + getDecoratedLeft(child!!))/ 2f
             val d = min(d1, abs(mid - childMid))
-            val scale = 1-0.15f * d/d1
+            val scale = 1-0.30f * d/d1
             child.scaleX = scale
             child.scaleY = scale
         }

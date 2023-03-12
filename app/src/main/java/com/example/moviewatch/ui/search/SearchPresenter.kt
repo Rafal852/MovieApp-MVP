@@ -11,6 +11,8 @@ class SearchPresenter
     private val repository: ApiRepository,
     val view: SearchContracts.View,
 ) : SearchContracts.Presenter, BasePresenterImpl() {
+
+
     override fun callSearchMoviesList(page: Int,query: String) {
         disposable = repository
             .getSearchMoviesList(1, query)
@@ -58,6 +60,30 @@ class SearchPresenter
 
                 }
 
+            }
+    }
+
+    override fun callGenres() {
+        disposable = repository
+            .getGenres()
+            .applyIoScheduler()
+            .subscribe { response ->
+                when (response.code()) {
+                    in 200..202 ->
+                        response.body()?.let { itBody ->
+                            Log.e("MainPresenter", "itBody : $itBody")
+                            view.loadGenres(itBody)
+                        }
+                    in 300..399 -> {
+                        Log.d("MainPresenter", " Redirection messages : ${response.code()}")
+                    }
+                    in 400..499 -> {
+                        Log.d("MainPresenter", " Client error responses : ${response.code()}")
+                    }
+                    in 500..599 -> {
+                        Log.d("MainPresenter", " Server error responses : ${response.code()}")
+                    }
+                }
             }
     }
 

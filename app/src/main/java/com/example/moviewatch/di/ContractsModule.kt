@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import com.example.moviewatch.ui.credits.PersonContracts
 import com.example.moviewatch.ui.details.DetailsContracts
 import com.example.moviewatch.ui.favorites.FavoritesContracts
+import com.example.moviewatch.ui.genres.GenresContracts
 import com.example.moviewatch.ui.home.HomeContracts
 import com.example.moviewatch.ui.search.SearchContracts
 import dagger.Module
@@ -39,6 +40,11 @@ object ContractsModule {
     @Provides
     fun favoriteView(fragment: Fragment): FavoritesContracts.View {
         return fragment as FavoritesContracts.View
+    }
+
+    @Provides
+    fun genreView(fragment: Fragment): GenresContracts.View {
+        return fragment as GenresContracts.View
     }
 
 }

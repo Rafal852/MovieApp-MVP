@@ -23,6 +23,10 @@
         android:id="@+id/actionToPersonFragment"
         app:destination="@id/personFragment2"
         />
+    <action
+        android:id="@+id/action_searchFragment_to_genresFragment2"
+        app:destination="@id/genresFragment" />
+
 
     <fragment
         android:id="@+id/detailsFragment"
@@ -47,7 +51,8 @@
         android:id="@+id/searchFragment"
         android:name="com.example.moviewatch.ui.search.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+    </fragment>
     <fragment
         android:id="@+id/personFragment2"
         android:name="com.example.moviewatch.ui.credits.PersonFragment"
@@ -57,4 +62,9 @@
             android:name="movieId"
             app:argType="integer" />
     </fragment>
+    <fragment
+        android:id="@+id/genresFragment"
+        android:name="com.example.moviewatch.ui.genres.GenresFragment"
+        android:label="fragment_genres"
+        tools:layout="@layout/fragment_genres" />
 </navigation>

@@ -3,7 +3,6 @@ package com.example.moviewatch.ui.credits
 import android.util.Log
 import com.example.moviewatch.db.MoviesEntity
 import com.example.moviewatch.repository.ApiRepository
-import com.example.moviewatch.repository.DatabaseRepository
 import com.example.moviewatch.response.PersonListResponse
 import com.example.moviewatch.response.TopMoviesResponse
 import com.example.moviewatch.ui.base.BasePresenter

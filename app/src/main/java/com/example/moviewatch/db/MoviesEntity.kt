@@ -12,7 +12,8 @@ data class MoviesEntity (
     var title : String ="",
     var rate : String ="",
     var lang : String ="",
-    var year : String =""
+    var year : String ="",
+    var userId : String=""
 
 
 )

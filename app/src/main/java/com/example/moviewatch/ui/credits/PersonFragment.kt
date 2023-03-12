@@ -35,8 +35,6 @@ class PersonFragment : Fragment(), PersonContracts.View {
     @Inject
     lateinit var personPresenter: PersonPresenter
 
-    @Inject
-    lateinit var entity: MoviesEntity
 
     @Inject
     lateinit var playedInAdapter: PlayedInAdapter

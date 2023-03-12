@@ -26,12 +26,14 @@ class TrailerMovieAdapter @Inject constructor() : RecyclerView.Adapter<TrailerMo
         return ViewHolder()
     }
 
+    //gets the last 5 items in reverse order
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.setData(differ.currentList[position])
+        holder.setData(differ.currentList[differ.currentList.size - 1 - position])
         holder.setIsRecyclable(false)
     }
 
-    override fun getItemCount() = differ.currentList.size
+    //checks if the size of the list is greater than 5. If it is, then it returns only the last 5
+    override fun getItemCount() = if (differ.currentList.size > 5) 5 else differ.currentList.size
 
     inner class ViewHolder : RecyclerView.ViewHolder(binding.root) {
 
